@@ -12,19 +12,54 @@ deployment:
   ports:
     - containerPort: 3000
   env:
-    - name: DB_HOST
+    - name: APP_ENV
+      value: production
+    - name: DATABASE_HOST
       value: mariadb.default.svc.cluster.local
-    - name: DB_PORT
+    - name: DATABASE_PORT
       value: "3306"
-    - name: DB_USER
-      value: root
-    - name: DB_PASSWORD
+    - name: DATABASE_USERNAME
+      value: api
+    - name: DATABASE_PASSWORD
       valueFrom:
         secretKeyRef:
-          name: mariadb-password
-          key: mariadb-root-password
-    - name: DB_NAME
+          name: db-password
+          key: database_password
+    - name: DATABASE_DB
       value: area-api-db
+    - name: TEST_DATABASE_USERNAME
+      value: api
+    - name: TEST_DATABASE_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: db-password
+          key: database_password
+    - name: TEST_DATABASE_DB
+      value: area-api-db
+    - name: ACCESS_TOKEN_SECRET
+      value: azertyuiopqsdfgjklhmwxcvbnazertyuiopqsdfghjklmwxcvbn
+    - name: ACCESS_TOKEN_EXPIRATION
+      value: 24h
+    - name: REFRESH_TOKEN_SECRET
+      value: azertyuiopqsdfgjklhmwxcvbnazertyuiopqsdfghjklmwxcvbnazerty
+    - name: REFRESH_TOKEN_EXPIRATION
+      value: 720h
+    - name: WEBAPP_DOMAINS
+      value: https://aether-area.fr
+    - name: APP_BASE_URL
+      value: https://aether-area.fr
+    - name: API_BASE_URL
+      value: https://api.aether-area.fr
+    - name: THROTTLE_TTL
+      value: "60"
+    - name: THROTTLE_LIMIT
+      value: "60"
+    - name: DISCORD_WEBHOOK
+      value: https://discord.com/api/webhooks/1161943192975978579/1z3w6KQGGc8qt5ekxlPjIVA4mcJW7SD9_IIAvMrH8BFIwXuLA6H3t6E32AoJo1NlXs3X
+    - name: GOOGLE_CLIENT_ID
+      value: 456488822381-3jsavfuicv056045fmv3f3ms4upfrgvu.apps.googleusercontent.com
+    - name: GOOGLE_CLIENT_SECRET
+      value: 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
 
 service:
   type: ClusterIP
