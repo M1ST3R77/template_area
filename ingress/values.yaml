@@ -1,0 +1,18 @@
+namespace: deployment
+
+rules:
+  - host: api.aether-area.fr
+    http:
+      paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: area-server
+              port:
+                number: 8080
+
+tls:
+  - hosts:
+      - api.aether-area.fr
+    secretName: area-tech-tls
